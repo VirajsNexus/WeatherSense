@@ -1,4 +1,4 @@
-🌦️ WeatherSense
+# 🌦️ WeatherSense
 --- 
 
 A smart and minimal weather application to get real-time weather updates by city or location.  
@@ -9,13 +9,18 @@ A smart and minimal weather application to get real-time weather updates by city
 
 - 🌍 Search weather by **city name** or use **current location**
 - 🌡️ Shows **temperature, humidity, wind speed, condition**
-- 🔄 Switch between **Celsius and Fahrenheit**
 - ⚡ Fast and lightweight
 - 🎨 Simple & clean interface
 - 🛡️ Handles errors gracefully (invalid city, network issues)
 
 ---
 
+## Preview 
+
+![WeatherSense](https://github.com/user-attachments/assets/6896b722-bbc5-4862-a26c-b5616f046f75)
+
+
+---
 
 ## 🚀 Getting Started
 
@@ -114,6 +119,6 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 
 ---
 
-<p align="center">Built with ❤️ by <a href="https://github.com/virajsnexus">Viraj</a></p>
+<p align="center">Built with ❤️ by <a href="https://github.com/virajsnexus">Viraj Jamdhade</a></p>
 
 ---
