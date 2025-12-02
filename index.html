@@ -2,29 +2,14 @@
 <html lang="en">
 
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.rain.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.rings.min.js"></script>
-     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.cells.min.js"></script>
-    <script src="weather app.js"></script>
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJDREYTW7Y"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-KJDREYTW7Y');
-    </script>
-    
     <title>WeatherSence by Viraj</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
@@ -33,62 +18,52 @@
             margin: 0;
         }
 
-        body {
-            /* REMOVED the static background image properties */
-            /* background: url('Weather background.jpg') no-repeat; */
-            /* background-size: cover; */
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ADDED: Style for the WebGL background container */
+        /* WebGL background (GLobe) */
         #webgl-background {
-            position: fixed; /* Or absolute, to stay in place */
-            top: 0;
-            left: 0;
+            position: fixed;
+            inset: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* This is CRUCIAL - it sends the background behind all other content */
+            z-index: -1;
         }
 
         .content {
-            flex: 1;
-            /* Added z-index to ensure it stays on top of the new background */
             position: relative;
             z-index: 1;
         }
 
         .footer {
-            text-align: center;
-            color: white;
-            font-weight: bold;
-            padding: 15px 0;
-            /* Added z-index here too */
             position: relative;
             z-index: 1;
+            text-align: center;
+            color: white;
+            padding: 20px 0;
+            font-weight: bold;
         }
 
         .footer a {
             color: white;
             text-decoration: none;
-            transition: color 0.3s ease;
         }
 
         .footer a:hover {
-            color: #0abcf9 !important;
+            color: #0abcf9;
         }
     </style>
 </head>
 
 <body>
+
+    <!-- WebGL / Vanta Background -->
     <div id="webgl-background"></div>
 
+    <!-- WEATHER APP BODY -->
     <div class="container content">
         <form class="col-md-6 m-auto py-5">
             <div class="input-group mb-3">
-                <input id="city-name" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <input id="city-name" type="text" class="form-control" placeholder="Enter a location for weather...">
                 <div class="input-group-append">
-                    <button onclick="searchTemperature()" type="button" class="btn btn-danger">Search</button>
+                    <button id="search-btn" type="button" class="btn btn-danger">Search</button>
                 </div>
             </div>
         </form>
@@ -97,48 +72,86 @@
             <img id="image-icon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
             <h1 id="city">Pune</h1>
             <h3><span id="temp">38.06</span>&deg;C</h3>
-            <h1 class="lead" id="weather">Clouds</h1>
+            <h1 id="weather">Clouds</h1>
         </div>
     </div>
 
+    <!-- FOOTER -->
     <div class="footer">
-        <p> Note : This is an API generated response. <br><br>
-        </p>
-        <strong>Created by 'Viraj Jamdhade'<br><br>Connect with me on<br></strong>
-        <div class="mt-2">
-            <a href="https://linkedin.com/in/viraj-jamdhade9420" target="_blank" class="mx-3">
-                <i class="fab fa-linkedin fa-lg"></i>
-            </a>
-            <a href="https://github.com/VirajsNexus" target="_blank" class="mx-3">
-                <i class="fab fa-github fa-lg"></i>
-            </a>
-        </div>
+        <p>Note : This is an API generated response.</p>
+        <strong>Created by 'Viraj Jamdhade'<br>Connect with me on</strong><br><br>
+        <a href="https://linkedin.com/in/viraj-jamdhade9420" target="_blank" class="mx-3">
+            <i class="fab fa-linkedin fa-lg"></i>
+        </a>
+        <a href="https://github.com/VirajsNexus" target="_blank" class="mx-3">
+            <i class="fab fa-github fa-lg"></i>
+        </a>
     </div>
 
+    <!-- THREE.js + VANTA GLOBE ONLY -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
 
     <script>
+        // Initialize Single GLOBE Background
         VANTA.GLOBE({
-          el: "#webgl-background", // The selector for your background div
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          skyColor: 0x68b8d7, // A nice sky blue
-          cloudColor: 0xadc1c5, // Light grey clouds
-          sunColor: 0xff9919, // A warm sun color
-          speed: 0.8 // You can adjust the speed of the animation
-        })
+            el: "#webgl-background",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200,
+            minWidth: 200,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x00aaff,
+            color2: 0xffffff,
+            backgroundColor: 0x000000
+        });
     </script>
 
-    <script src="weather app.js"></script>
+    <!-- WEATHER APP JS LOGIC -->
+    <script>
+        const API_KEY = `560b67b7afd2844922d3b27552d2db52`;
+
+        const searchTemperature = (event) => {
+            const city = document.getElementById('city-name').value;
+            if (!city) return alert("Please enter a city name!");
+
+            const url =
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => displayTemperature(data));
+        }
+
+        const setInnerText = (id, text) => {
+            document.getElementById(id).innerText = text;
+        }
+
+        const displayTemperature = (temperature) => {
+            if (temperature.cod === 404) {
+                alert("City not found. Please try again.");
+                return;
+            }
+
+            setInnerText('city', temperature.name);
+            setInnerText('temp', temperature.main.temp);
+            setInnerText('weather', temperature.weather[0].main);
+
+            const url =
+                `https://openweathermap.org/img/wn/${temperature.weather[0].icon}@2x.png`;
+            document.getElementById('image-icon').src = url;
+        }
+
+        // Event Listeners
+        document.getElementById('search-btn').addEventListener('click', searchTemperature);
+
+        document.getElementById('city-name').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') searchTemperature();
+        });
+    </script>
+
 </body>
 
 </html>
-
-
-
-
-
