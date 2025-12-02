@@ -26,7 +26,7 @@ const setWeatherBackground = (weatherCondition) => {
     switch (weatherCondition) {
         case 'Clear':
             // Sunny background
-            vantaEffect = VANTA.RINGS({
+            vantaEffect = VANTA.GLOBE({
                 el: "#webgl-background",
                 mouseControls: true,
                 touchControls: true,
@@ -42,7 +42,7 @@ const setWeatherBackground = (weatherCondition) => {
 
         case 'Snow':
             // Cold / Snowy background (ice crystal effect)
-            vantaEffect = VANTA.CELLS({
+            vantaEffect = VANTA.GLOBE({
                 el: "#webgl-background",
                 mouseControls: true,
                 touchControls: true,
@@ -59,7 +59,7 @@ const setWeatherBackground = (weatherCondition) => {
 
         case 'Clouds':
             // Cloudy background
-            vantaEffect = VANTA.CLOUDS({
+            vantaEffect = VANTA.GLOBE({
                 el: "#webgl-background",
                 mouseControls: true,
                 touchControls: true,
@@ -76,7 +76,7 @@ const setWeatherBackground = (weatherCondition) => {
         case 'Drizzle':
         case 'Thunderstorm':
             // Raining background
-            vantaEffect = VANTA.RAIN({
+            vantaEffect = VANTA.GLOBE({
                 el: "#webgl-background",
                 mouseControls: true,
                 touchControls: true,
@@ -140,3 +140,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
